@@ -1,0 +1,1 @@
+UI tests cover accessible application composition and user-visible shell behavior, including Analytics summaries, filters, distributions, and claim drill-down, plus AI/HITL queues, filtering, detail separation, drill-down, empty, and error states.

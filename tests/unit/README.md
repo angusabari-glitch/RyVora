@@ -1,0 +1,1 @@
+Unit tests cover independent scripts and business logic, including Analytics aggregations, supported filters, cross-module Claim_ID relationships, and AI/HITL recommendation/review summaries, filters, sorting, pagination, and detail lookup. Add focused regression coverage with each completed feature.

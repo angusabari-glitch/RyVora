@@ -1,0 +1,339 @@
+{
+	"datasetId": "ryvora-synthetic-healthcare",
+	"version": "1.2",
+	"classification": "synthetic",
+	"sheets": {
+		"Patients": {
+			"records": 50,
+			"columns": [
+				"Patient_ID",
+				"Patient_Name",
+				"Member_ID",
+				"DOB",
+				"Insurance_Plan",
+				"Patient_Status"
+			],
+			"primaryKey": "Patient_ID",
+			"dates": ["DOB"]
+		},
+		"Providers": {
+			"records": 10,
+			"columns": [
+				"Provider_ID",
+				"Provider_Name",
+				"Specialty",
+				"Facility",
+				"NPI",
+				"Provider_Status"
+			],
+			"primaryKey": "Provider_ID",
+			"numeric": ["NPI"]
+		},
+		"Payers": {
+			"records": 6,
+			"columns": [
+				"Payer_ID",
+				"Payer_Name",
+				"Payer_Type",
+				"Plan_Type",
+				"Payer_Status"
+			],
+			"primaryKey": "Payer_ID"
+		},
+		"Claims": {
+			"records": 1000,
+			"columns": [
+				"Claim_ID",
+				"Patient_ID",
+				"Provider_ID",
+				"Payer_ID",
+				"Service_Date",
+				"Submission_Date",
+				"Claim_Type",
+				"Billed_Amount",
+				"Claim_Status",
+				"Priority",
+				"AR_Age",
+				"Current_Owner"
+			],
+			"primaryKey": "Claim_ID",
+			"required": [
+				"Claim_ID",
+				"Patient_ID",
+				"Provider_ID",
+				"Payer_ID",
+				"Service_Date",
+				"Submission_Date",
+				"Claim_Type",
+				"Billed_Amount",
+				"Claim_Status",
+				"Priority",
+				"AR_Age",
+				"Current_Owner"
+			],
+			"dates": ["Service_Date", "Submission_Date"],
+			"money": ["Billed_Amount"],
+			"numeric": ["AR_Age"]
+		},
+		"Claim_Transactions_837": {
+			"records": 1000,
+			"columns": [
+				"Transaction_ID",
+				"Claim_ID",
+				"Transaction_Type",
+				"Submission_Date",
+				"837_Status",
+				"Rejection_Code",
+				"Rejection_Reason",
+				"Response_Date"
+			],
+			"primaryKey": "Transaction_ID",
+			"required": ["Transaction_ID", "Claim_ID"],
+			"dates": ["Submission_Date", "Response_Date"]
+		},
+		"Denials": {
+			"records": 290,
+			"columns": [
+				"Denial_ID",
+				"Claim_ID",
+				"Denial_Code",
+				"Denial_Reason",
+				"Denial_Category",
+				"Denial_Amount",
+				"Denial_Date",
+				"Appeal_Status",
+				"Corrective_Action",
+				"Resolution_Status",
+				"AI_Recommendation",
+				"AI_Confidence"
+			],
+			"primaryKey": "Denial_ID",
+			"required": ["Denial_ID", "Claim_ID", "Denial_Amount", "Denial_Date"],
+			"money": ["Denial_Amount"],
+			"dates": ["Denial_Date"],
+			"numeric": ["AI_Confidence"]
+		},
+		"AI_Recommendations": {
+			"records": 290,
+			"columns": [
+				"AI_Recommendation_ID",
+				"Claim_ID",
+				"Denial_ID",
+				"Recommendation",
+				"Confidence_Score",
+				"Recommendation_Type",
+				"AI_Status",
+				"Generated_Date"
+			],
+			"primaryKey": "AI_Recommendation_ID",
+			"required": ["AI_Recommendation_ID", "Claim_ID", "Denial_ID"],
+			"numeric": ["Confidence_Score"],
+			"dates": ["Generated_Date"]
+		},
+		"Human_Reviews": {
+			"records": 180,
+			"columns": [
+				"Review_ID",
+				"AI_Recommendation_ID",
+				"Reviewer_Role",
+				"Human_Decision",
+				"Override_Flag",
+				"Override_Reason",
+				"Review_Date",
+				"Final_Action"
+			],
+			"primaryKey": "Review_ID",
+			"required": ["Review_ID", "AI_Recommendation_ID"],
+			"dates": ["Review_Date"]
+		},
+		"Payments_835": {
+			"records": 520,
+			"columns": [
+				"Payment_ID",
+				"Claim_ID",
+				"Payer_ID",
+				"835_Transaction_ID",
+				"Billed_Amount",
+				"Allowed_Amount",
+				"Paid_Amount",
+				"Adjustment_Amount",
+				"835_Match_Status",
+				"Payment_Date"
+			],
+			"primaryKey": "Payment_ID",
+			"required": ["Payment_ID", "Claim_ID", "Payer_ID", "835_Transaction_ID"],
+			"money": [
+				"Billed_Amount",
+				"Allowed_Amount",
+				"Paid_Amount",
+				"Adjustment_Amount"
+			],
+			"dates": ["Payment_Date"]
+		},
+		"AR": {
+			"records": 1000,
+			"columns": [
+				"AR_ID",
+				"Claim_ID",
+				"Original_Balance",
+				"Current_Balance",
+				"AR_Age",
+				"Aging_Bucket",
+				"AR_Status",
+				"Next_Action",
+				"Owner",
+				"Adjustment_Amount",
+				"Reconciliation_Status"
+			],
+			"primaryKey": "AR_ID",
+			"required": [
+				"AR_ID",
+				"Claim_ID",
+				"Original_Balance",
+				"Current_Balance",
+				"AR_Age"
+			],
+			"money": ["Original_Balance", "Current_Balance", "Adjustment_Amount"],
+			"numeric": ["AR_Age"]
+		},
+		"Exceptions": {
+			"records": 180,
+			"columns": [
+				"Exception_ID",
+				"Claim_ID",
+				"Exception_Type",
+				"Severity",
+				"Description",
+				"Owner",
+				"Status",
+				"Created_Date"
+			],
+			"primaryKey": "Exception_ID",
+			"required": ["Exception_ID", "Claim_ID"],
+			"dates": ["Created_Date"]
+		},
+		"Audit_Trail": {
+			"records": 3060,
+			"columns": [
+				"Audit_ID",
+				"Claim_ID",
+				"Event_Type",
+				"Previous_Status",
+				"New_Status",
+				"Performed_By",
+				"Timestamp",
+				"Reason"
+			],
+			"primaryKey": "Audit_ID",
+			"required": ["Audit_ID", "Claim_ID"],
+			"dates": ["Timestamp"]
+		},
+		"Data_Dictionary": {
+			"records": 17,
+			"columns": ["Table", "Field", "Business Meaning", "Key / Relationship"]
+		},
+		"Scenario_Map": {
+			"records": 5,
+			"columns": [
+				"Scenario_ID",
+				"Scenario_Name",
+				"Expected_Lifecycle",
+				"Portfolio_Purpose"
+			],
+			"primaryKey": "Scenario_ID"
+		},
+		"Validation_Summary": {
+			"records": 12,
+			"columns": ["Dataset", "Record_Count"],
+			"numeric": ["Record_Count"]
+		},
+		"QA_Validation": {
+			"records": 19,
+			"columns": ["QA_Check", "Result", "Issue_Count", "Evidence"],
+			"numeric": ["Issue_Count"]
+		},
+		"Expansion_QA": {
+			"records": 25,
+			"columns": ["RyVora Synthetic Dataset Expansion", "v1.2"]
+		}
+	},
+	"relationships": [
+		["Claims", "Patient_ID", "Patients", "Patient_ID"],
+		["Claims", "Provider_ID", "Providers", "Provider_ID"],
+		["Claims", "Payer_ID", "Payers", "Payer_ID"],
+		["Claim_Transactions_837", "Claim_ID", "Claims", "Claim_ID"],
+		["Denials", "Claim_ID", "Claims", "Claim_ID"],
+		["AI_Recommendations", "Claim_ID", "Claims", "Claim_ID"],
+		["AI_Recommendations", "Denial_ID", "Denials", "Denial_ID"],
+		[
+			"Human_Reviews",
+			"AI_Recommendation_ID",
+			"AI_Recommendations",
+			"AI_Recommendation_ID"
+		],
+		["Payments_835", "Claim_ID", "Claims", "Claim_ID"],
+		["Payments_835", "Payer_ID", "Payers", "Payer_ID"],
+		["AR", "Claim_ID", "Claims", "Claim_ID"],
+		["Exceptions", "Claim_ID", "Claims", "Claim_ID"],
+		["Audit_Trail", "Claim_ID", "Claims", "Claim_ID"]
+	],
+	"claimStatuses": ["Denied", "Paid", "Rejected", "Pending", "Partially Paid"],
+	"embeddedSummaryBaseline": {
+		"classification": "historical-v1.1-baseline-metadata",
+		"description": "Validation_Summary records the retained 100-claim v1.1 operational baseline. It is source metadata, not the v1.2 worksheet row counts.",
+		"entries": [
+			{
+				"label": "Patients",
+				"baselineRecordCount": 50,
+				"v1_2Sheet": "Patients"
+			},
+			{
+				"label": "Providers",
+				"baselineRecordCount": 10,
+				"v1_2Sheet": "Providers"
+			},
+			{ "label": "Payers", "baselineRecordCount": 6, "v1_2Sheet": "Payers" },
+			{ "label": "Claims", "baselineRecordCount": 100, "v1_2Sheet": "Claims" },
+			{
+				"label": "837 Transactions",
+				"baselineRecordCount": 100,
+				"v1_2Sheet": "Claim_Transactions_837"
+			},
+			{ "label": "Denials", "baselineRecordCount": 29, "v1_2Sheet": "Denials" },
+			{
+				"label": "AI Recommendations",
+				"baselineRecordCount": 29,
+				"v1_2Sheet": "AI_Recommendations"
+			},
+			{
+				"label": "Human Reviews",
+				"baselineRecordCount": 18,
+				"v1_2Sheet": "Human_Reviews"
+			},
+			{
+				"label": "835 Payments",
+				"baselineRecordCount": 52,
+				"v1_2Sheet": "Payments_835"
+			},
+			{ "label": "AR Records", "baselineRecordCount": 100, "v1_2Sheet": "AR" },
+			{
+				"label": "Exceptions",
+				"baselineRecordCount": 18,
+				"v1_2Sheet": "Exceptions"
+			},
+			{
+				"label": "Audit Events",
+				"baselineRecordCount": 306,
+				"v1_2Sheet": "Audit_Trail"
+			}
+		]
+	},
+	"validationTargets": {
+		"claimCount": 1000,
+		"billedAmount": 4621631.63,
+		"deniedClaims": 290,
+		"denialRatePercent": 29,
+		"averageArAgeDays": 32.35,
+		"averageArAgeToleranceDays": 0.01
+	}
+}

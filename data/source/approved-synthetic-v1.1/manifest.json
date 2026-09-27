@@ -1,0 +1,12 @@
+{
+	"datasetId": "ryvora-synthetic-healthcare",
+	"version": "1.2",
+	"classification": "synthetic",
+	"approval": "approved",
+	"files": [
+		{
+			"path": "RCM360_Synthetic_RCM_Dataset_v1_2_1000_Claims_QA_Expanded.xlsx",
+			"sha256": "98ff8803e19f3a5158e10fb3ae7bb85fa1511dceeb3eea7159837fd0c387e71e"
+		}
+	]
+}
